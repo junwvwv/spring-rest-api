@@ -37,7 +37,7 @@ public class Event {
 
     private int maxPrice; //최대 등록비
 
-    private int limitOfEnrollment; //등록 제한
+    private int limitOfEnrollment; //참가 제한 수
 
     private boolean offline; //오프라인 유무
 
