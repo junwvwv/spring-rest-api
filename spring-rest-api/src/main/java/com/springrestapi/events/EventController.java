@@ -1,6 +1,7 @@
 package com.springrestapi.events;
 
 import lombok.RequiredArgsConstructor;
+import org.modelmapper.ModelMapper;
 import org.springframework.hateoas.MediaTypes;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
@@ -19,8 +20,11 @@ public class EventController {
 
     private final EventRepository eventRepository;
 
+    private final ModelMapper modelMapper;
+
     @PostMapping
-    public ResponseEntity<Event> createEvent(@RequestBody Event event){
+    public ResponseEntity<Event> createEvent(@RequestBody EventDto eventDto){
+        Event event = modelMapper.map(eventDto, Event.class);
         Event newEvent = eventRepository.save(event);
         /**
          * linkTo - 컨트롤러 클래스를 가리키는 webMvcLinkBuilder 객체를 반환
@@ -29,7 +33,6 @@ public class EventController {
          */
         //URI createdUri =  linkTo(methodOn(EventController.class).createEvent(null)).slash("{id}").toUri();
         URI createdUri =  linkTo(EventController.class).slash(newEvent.getId()).toUri();
-        event.setId(10);
 
         return ResponseEntity.created(createdUri).body(event);
     }
