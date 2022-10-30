@@ -2,6 +2,7 @@ package com.springrestapi.events;
 
 import lombok.*;
 
+import javax.persistence.*;
 import java.time.LocalDateTime;
 
 @Builder
@@ -9,6 +10,7 @@ import java.time.LocalDateTime;
 @AllArgsConstructor
 @EqualsAndHashCode(of = "id")
 @Getter @Setter
+@Entity
 /**
  * 엔티티에 @data 사용하지 않는 것이 좋다
  * EqualsAndHashCode 가 모든 필드를 참조하기 때문
@@ -17,6 +19,8 @@ public class Event {
     /**
      * 경매 이벤트
      */
+    @Id
+    @GeneratedValue
     private Integer id; //식별 id
 
     private String name; //이름
@@ -43,6 +47,7 @@ public class Event {
 
     private boolean free; //무료 유무
 
+    @Enumerated(EnumType.STRING)
     private EventStatus eventStatus; //이벤트 상태
 
 }
